@@ -1,58 +1,70 @@
+"use client";
+
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 export default function ServicesSection() {
+  const services = [
+    {
+      title: "Anxiety & Stress",
+      image: "/anxiety.jpeg",
+      description: "Evidence-based therapy to manage anxiety, reduce stress, and regain control.",
+    },
+    {
+      title: "Relationship Counseling",
+      image: "/relationship.jpeg",
+      description: "Helping couples and individuals build stronger, more fulfilling relationships.",
+    },
+    {
+      title: "Trauma Recovery",
+      image: "/trauma.jpeg",
+      description: "Support and tools for healing from past trauma and building resilience.",
+    },
+  ];
+
   return (
-    <section id="services" className="bg-white py-20 px-6">
+    <motion.section
+      id="services"
+      className="bg-white py-20 px-6"
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      transition={{ duration: 0.6 }}
+      viewport={{ once: true }}
+    >
       <div className="max-w-6xl mx-auto text-center">
-        <h2 className="text-3xl font-bold text-gray-800 mb-10">Services Offered</h2>
+        <motion.h2
+          className="text-3xl font-bold text-gray-800 mb-10"
+          initial={{ y: 20, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          viewport={{ once: true }}
+        >
+          Services Offered
+        </motion.h2>
 
         <div className="grid gap-10 md:grid-cols-3">
-          {/* Service 1 */}
-          <div className="bg-gray-50 rounded-lg shadow-md p-6 hover:shadow-xl transition">
-            <Image
-              src="/anxiety.jpeg"
-              alt="Anxiety & Stress"
-              width={1200}
-              height={1200}
-              className="mx-auto mb-4"
-            />
-            <h3 className="text-xl font-semibold text-gray-700 mb-2">Anxiety & Stress</h3>
-            <p className="text-gray-600">
-              Evidence-based therapy to manage anxiety, reduce stress, and regain control.
-            </p>
-          </div>
-
-          {/* Service 2 */}
-          <div className="bg-gray-50 rounded-lg shadow-md p-6 hover:shadow-xl transition">
-            <Image
-              src="/relationship.jpeg"
-              alt="Relationship Counseling"
-              width={1200}
-              height={1200}
-              className="mx-auto mb-4"
-            />
-            <h3 className="text-xl font-semibold text-gray-700 mb-2">Relationship Counseling</h3>
-            <p className="text-gray-600">
-              Helping couples and individuals build stronger, more fulfilling relationships.
-            </p>
-          </div>
-
-          {/* Service 3 */}
-          <div className="bg-gray-50 rounded-lg shadow-md p-6 hover:shadow-xl transition">
-            <Image
-              src="/trauma.jpeg"
-              alt="Trauma Recovery"
-              width={1200}
-              height={1200}
-              className="mx-auto mb-4"
-            />
-            <h3 className="text-xl font-semibold text-gray-700 mb-2">Trauma Recovery</h3>
-            <p className="text-gray-600">
-              Support and tools for healing from past trauma and building resilience.
-            </p>
-          </div>
+          {services.map((service, index) => (
+            <motion.div
+              key={index}
+              className="bg-gray-50 rounded-lg shadow-md p-6 hover:shadow-xl transition"
+              initial={{ scale: 0.9, opacity: 0 }}
+              whileInView={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.4, delay: index * 0.2 }}
+              viewport={{ once: true }}
+            >
+              <Image
+                src={service.image}
+                alt={service.title}
+                width={1200}
+                height={1200}
+                className="mx-auto mb-4 rounded"
+              />
+              <h3 className="text-xl font-semibold text-gray-700 mb-2">{service.title}</h3>
+              <p className="text-gray-600">{service.description}</p>
+            </motion.div>
+          ))}
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }

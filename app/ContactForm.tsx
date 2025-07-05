@@ -1,6 +1,8 @@
 "use client";
+
 import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import { motion } from "framer-motion";
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
@@ -11,21 +13,33 @@ export default function ContactForm() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    // Here you can send data to backend if needed
-
     toast.success("Thank you! Message sent 😊");
-    setFormData({ name: "", email: "", message: "" }); // Reset form
+    setFormData({ name: "", email: "", message: "" });
   };
 
   return (
-    <section id="contact" className="py-20 bg-white px-6">
+    <motion.section
+      id="contact"
+      className="py-20 bg-white px-6"
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8 }}
+      viewport={{ once: true }}
+    >
       <Toaster position="top-center" reverseOrder={false} />
 
       <div className="max-w-2xl mx-auto text-center">
-        <h2 className="text-3xl font-bold text-gray-800 mb-6">Contact Me</h2>
+        <motion.h2
+          className="text-3xl font-bold text-gray-800 mb-6"
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.3 }}
+        >
+          Contact Me
+        </motion.h2>
+
         <form onSubmit={handleSubmit} className="space-y-6 text-left">
-          <input
+          <motion.input
             type="text"
             name="name"
             placeholder="Your Name"
@@ -33,8 +47,10 @@ export default function ContactForm() {
             value={formData.name}
             onChange={handleChange}
             required
+            whileFocus={{ scale: 1.02 }}
+            whileHover={{ scale: 1.01 }}
           />
-          <input
+          <motion.input
             type="email"
             name="email"
             placeholder="Your Email"
@@ -42,8 +58,10 @@ export default function ContactForm() {
             value={formData.email}
             onChange={handleChange}
             required
+            whileFocus={{ scale: 1.02 }}
+            whileHover={{ scale: 1.01 }}
           />
-          <textarea
+          <motion.textarea
             name="message"
             placeholder="Your Message"
             className="w-full border border-gray-300 rounded px-4 py-2"
@@ -51,15 +69,19 @@ export default function ContactForm() {
             value={formData.message}
             onChange={handleChange}
             required
-          ></textarea>
-          <button
+            whileFocus={{ scale: 1.01 }}
+          ></motion.textarea>
+
+          <motion.button
             type="submit"
             className="bg-[#4CAF50] text-white px-6 py-2 rounded hover:bg-[#43a047] transition"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
             Send Message
-          </button>
+          </motion.button>
         </form>
       </div>
-    </section>
+    </motion.section>
   );
 }

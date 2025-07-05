@@ -1,5 +1,7 @@
 "use client";
+
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const faqData = [
   {
@@ -38,10 +40,26 @@ export default function FaqSection() {
   return (
     <section id="faq" className="bg-[#f9fafb] py-20 px-6">
       <div className="max-w-4xl mx-auto text-center">
-        <h2 className="text-3xl font-bold text-gray-800 mb-10">Frequently Asked Questions</h2>
+        <motion.h2
+          className="text-3xl font-bold text-gray-800 mb-10"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+        >
+          Frequently Asked Questions
+        </motion.h2>
+
         <div className="text-left space-y-4">
           {faqData.map((item, index) => (
-            <div key={index} className="border border-gray-300 rounded-lg">
+            <motion.div
+              key={index}
+              className="border border-gray-300 rounded-lg overflow-hidden"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: index * 0.1 }}
+              viewport={{ once: true }}
+            >
               <button
                 onClick={() => toggleFAQ(index)}
                 className="w-full text-left px-6 py-4 flex justify-between items-center text-lg font-medium text-gray-700 hover:bg-gray-100 transition"
@@ -49,10 +67,21 @@ export default function FaqSection() {
                 {item.question}
                 <span className="text-xl">{openIndex === index ? "−" : "+"}</span>
               </button>
-              {openIndex === index && (
-                <div className="px-6 pb-4 text-gray-600 text-base">{item.answer}</div>
-              )}
-            </div>
+
+              <AnimatePresence>
+                {openIndex === index && (
+                  <motion.div
+                    className="px-6 pb-4 text-gray-600 text-base"
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    {item.answer}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
           ))}
         </div>
       </div>
